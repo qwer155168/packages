@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024 ImmortalWrt.org
+# Copyright (C) 2024-2025 ImmortalWrt.org
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dufs
-PKG_VERSION:=0.42.0
-PKG_RELEASE:=2
+PKG_VERSION:=0.46.0
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/sigoden/dufs/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=76439a01c142d6a378912930de4b74821aa2fef54ccfb7dbb00d6ea3b1a0ab4c
+PKG_HASH:=e5bb926107736802bfd3be6937482dd3daf396a5c481fed714de542055286ebc
 
 PKG_MAINTAINER:=Tianling Shen <cnsztl@immortalwrt.org>
 PKG_LICENSE:=Apache-2.0 MIT
@@ -48,6 +48,8 @@ define Package/dufs/install
 	$(INSTALL_CONF) $(CURDIR)/files/dufs.config $(1)/etc/config/dufs
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) $(CURDIR)/files/dufs.init $(1)/etc/init.d/dufs
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) $(CURDIR)/files/dufs.uci $(1)/etc/uci-defaults/90-dufs-uci-migration
 endef
 
 $(eval $(call RustBinPackage,dufs))

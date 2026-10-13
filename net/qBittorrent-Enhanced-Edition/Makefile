@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qBittorrent-Enhanced-Edition
-PKG_VERSION:=5.0.2.10
+PKG_VERSION:=5.2.4.10
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/c0re100/qBittorrent-Enhanced-Edition/tar.gz/release-$(PKG_VERSION)?
-PKG_HASH:=425753dcdcca1a40da2996343a8ce22b45797cf4d7305db897bf61bcb56685f5
+PKG_HASH:=19e1f0ff615834780abc7bf75a8d1c999fc368c28dae9845c658f93a51ec5b9b
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-release-$(PKG_VERSION)
 
 PKG_LICENSE:=GPL-2.0-or-later
@@ -14,6 +14,7 @@ PKG_LICENSE_FILES:=COPYING
 PKG_CPE_ID:=cpe:/a:qbittorrent:qbittorrent
 
 PKG_BUILD_DEPENDS:=qt6tools/host
+PKG_BUILD_FLAGS:=no-mips16
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -27,7 +28,7 @@ define Package/qbittorrent-enhanced-edition
   URL:=https://github.com/c0re100/qBittorrent-Enhanced-Edition
   DEPENDS:=+libtorrent-rasterbar +libQt6Core +libQt6Network +libQt6Sql \
     +libQt6Xml +qt6-plugin-libqopensslbackend +qt6-plugin-libqsqlite
-  PROVIDES:=qbittorrent
+  CONFLICTS:=qbittorrent
 endef
 
 define Package/qbittorrent-enhanced-edition/description

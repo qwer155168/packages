@@ -8,8 +8,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt6tools
-PKG_BASE:=6.7
-PKG_BUGFIX:=3
+PKG_BASE:=6.12
+PKG_BUGFIX:=0
 PKG_VERSION:=$(PKG_BASE).$(PKG_BUGFIX)
 PKG_RELEASE:=1
 
@@ -17,7 +17,7 @@ PKG_SOURCE:=qttools-everywhere-src-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://mirrors.tencent.com/qt/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/ \
 		  https://mirrors.aliyun.com/qt/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/ \
 		  http://download.qt-project.org/archive/qt/$(PKG_BASE)/$(PKG_VERSION)/submodules/
-PKG_HASH:=f03bb7df619cd9ac9dba110e30b7bcab5dd88eb8bdc9cc752563b4367233203f
+PKG_HASH:=8dab8f3611496486a470ad5f115ceea584f36bc22a2b8b6f6ebdbafbb8160693
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/qttools-everywhere-src-$(PKG_VERSION)
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
@@ -44,17 +44,18 @@ define Package/qt6tools
 endef
 
 CMAKE_HOST_OPTIONS+= \
-	-DINPUT_assistant=no \
-	-DINPUT_designer=no \
-	-DINPUT_clang=no \
-	-DINPUT_distancefieldgenerator=no \
-	-DINPUT_kmap2qmap=no \
-	-DINPUT_pixeltool=no \
-	-DINPUT_qdbus=no \
-	-DINPUT_qev=no \
-	-DINPUT_qtattributionsscanner=no \
-	-DINPUT_qtplugininfo=no \
-	-DINPUT_qtdiag=no
+	-DFEATURE_assistant=OFF \
+	-DFEATURE_clang=OFF \
+	-DFEATURE_designer=OFF \
+	-DFEATURE_distancefieldgenerator=OFF \
+	-DFEATURE_kmap2qmap=OFF \
+	-DFEATURE_pixeltool=OFF \
+	-DFEATURE_qdbus=OFF \
+	-DFEATURE_qev=OFF \
+	-DFEATURE_qtattributionsscanner=OFF \
+	-DFEATURE_qtdiag=OFF \
+	-DFEATURE_qdoc=OFF \
+	-DFEATURE_qtplugininfo=OFF
 
 $(eval $(call BuildPackage,qt6tools))
 $(eval $(call HostBuild))

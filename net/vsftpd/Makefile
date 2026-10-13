@@ -9,14 +9,15 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vsftpd
 PKG_VERSION:=3.0.5
-PKG_RELEASE:=2
+PKG_RELEASE:=7
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://security.appspot.com/downloads/
 PKG_HASH:=26b602ae454b0ba6d99ef44a09b6b9e0dfa7f67228106736df1f278c70bc91d3
 
 PKG_MAINTAINER:=Cezary Jackiewicz <cezary@eko.one.pl>
-PKG_LICENSE:=GPLv2
+PKG_LICENSE:=GPL-2.0-only
+PKG_LICENSE_FILES:=COPYING COPYRIGHT LICENSE
 PKG_CPE_ID:=cpe:/a:vsftpd_project:vsftpd
 
 PKG_BUILD_FLAGS:=gc-sections lto
@@ -49,6 +50,7 @@ endef
 define Package/vsftpd/conffiles
 /etc/vsftpd.conf
 /etc/vsftpd
+/etc/config/vsftpd
 endef
 
 Package/vsftpd-tls/conffiles=$(Package/vsftpd/conffiles)
@@ -96,11 +98,11 @@ define Package/vsftpd/install
 	$(INSTALL_BIN) ./files/$(PKG_NAME)_prepare $(1)/usr/sbin/
 	#$(INSTALL_DIR) $(1)/etc
 	#$(INSTALL_CONF) ./files/$(PKG_NAME).conf $(1)/etc/$(PKG_NAME).conf
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_BIN) ./files/vsftpd.uci $(1)/etc/config/vsftpd
 	$(INSTALL_DIR) $(1)/etc/init.d
 	#$(INSTALL_BIN) ./files/$(PKG_NAME).init $(1)/etc/init.d/$(PKG_NAME)
 	$(INSTALL_BIN) ./files/$(PKG_NAME)-uci.init $(1)/etc/init.d/$(PKG_NAME)
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_CONF) ./files/$(PKG_NAME).uci $(1)/etc/config/$(PKG_NAME)
 	$(INSTALL_DIR) $(1)/etc/vsftpd
 endef
 

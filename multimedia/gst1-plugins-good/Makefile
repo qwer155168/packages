@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gst1-plugins-good
-PKG_VERSION:=1.24.8
+PKG_VERSION:=1.28.7
 PKG_RELEASE:=1
 
 PKG_SOURCE:=gst-plugins-good-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://gstreamer.freedesktop.org/src/gst-plugins-good/
-PKG_HASH:=613a20f03bd4544b52f10f6ceb4e0fffd25eff15bf338ab8b12b971982eb0153
+PKG_HASH:=87256969c82cf3bc8574301f3e7044a90de0ac500a5a27d8ba38c4dde894dd8b
 PKG_BUILD_DIR:=$(BUILD_DIR)/gst-plugins-good-$(PKG_VERSION)
 
 PKG_MAINTAINER:=W. Michael Petullo <mike@flyn.org> \
@@ -262,7 +262,7 @@ $(eval $(call GstBuildPlugin,videofilter,videofilter support,video,,))
 $(eval $(call GstBuildPlugin,videomixer,videomixer support,video,,))
 $(eval $(call GstBuildPlugin,wavenc,Wav encoder,riff,,))
 $(eval $(call GstBuildPlugin,wavparse,Wav parser,audio riff tag,,))
-#$(eval $(call GstBuildPlugin,y4m,sty4menc support,video,,))
+$(eval $(call GstBuildPlugin,y4m,y4m encoder/decoder,video,,))
 
 #$(eval $(call GstBuildPlugin,1394,IEEE 1394 support,,,))
 #$(eval $(call GstBuildPlugin,aalib,aalib text console video sink,,,))

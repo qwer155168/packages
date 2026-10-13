@@ -5,47 +5,50 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=chinadns-ng
-PKG_VERSION:=2024.10.14
+PKG_VERSION:=2025.08.09
 PKG_RELEASE:=1
 
 ifeq ($(ARCH),aarch64)
   PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl_noasm@aarch64-linux-musl@generic+v8a@fast+lto
-  PKG_HASH:=914e8b66805b1804f6688dfcda3b67c7c45e5fc5e05afff4837450f8b67a8372
+  PKG_HASH:=42ddd494200ec6d88b35902927688d316bc23e06e6c08d9e01eb2412196ab845
 else ifeq ($(ARCH),arm)
   # Referred to golang/golang-values.mk
   ARM_CPU_FEATURES:=$(word 2,$(subst +,$(space),$(call qstrip,$(CONFIG_CPU_TYPE))))
   ifeq ($(ARM_CPU_FEATURES),)
     PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@arm-linux-musleabi@generic+v5t+soft_float@fast+lto
-    PKG_HASH:=9adfe309a41f21156cc5597333c42c36bc9e4e42eb1a71d18b92c39aed0340b2
+    PKG_HASH:=46ce65b0e2342d4f8dac63f281a38a239d8de29d6c75f863c797b164ab8e72cc
   else ifneq ($(filter $(ARM_CPU_FEATURES),vfp vfpv2),)
     PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@arm-linux-musleabi@generic+v6+soft_float@fast+lto
-    PKG_HASH:=4881e4dc20a1a4b21bc0cc3c378da8d8004274929e5900d5246aece230eea4f8
+    PKG_HASH:=0a401d1dc11129481b2baf86f847d55d66bd7e725cba4bf57875fdad27ef0052
   else
     PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@arm-linux-musleabihf@generic+v7a@fast+lto
-    PKG_HASH:=5a47e56ef6fac90d22eabc766ffb817cb15fa3875b03ea2a4cd8a684b25b401a
+    PKG_HASH:=dfa1f6ba80fb0925613822f4c4e00df8da68e7b8b772048d26a0d1a9d07d346b
   endif
 else ifeq ($(ARCH),i386)
   ifneq ($(CONFIG_TARGET_x86_geode)$(CONFIG_TARGET_x86_legacy),)
     PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@i386-linux-musl@i686@fast+lto
-    PKG_HASH:=f29853387f51bdb4a993504a31933ece538f99365f3f3b46794caa75a3b653ba
+    PKG_HASH:=85e057dd0a0e8913b30471737436ab8b71834c494ed9f9e53544261b1ffdc8d6
   else
     PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@i386-linux-musl@pentium4@fast+lto
-    PKG_HASH:=279415d9fab1e49bb4bf819270da0d57a9dcdc078cbd4b725b0b7cf3c52d2aba
+    PKG_HASH:=2d0f1a05c82f2e21e71a6618c7f1d2e7f46aa6a21535d774d517e87ec00c989b
   endif
 else ifeq ($(ARCH),mips)
     PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@mips-linux-musl@mips32+soft_float@fast+lto
-    PKG_HASH:=b57f9ba76ff4a7c52d1cfbe75de47f6f0e8a1bf8f2a293a39c10b5d94c99cc0f
+    PKG_HASH:=b610821a8f61b0ed3c8c7e82e10d401348a9de17f900988589024a37c4099c8e
 else ifeq ($(ARCH),mipsel)
   ifeq ($(CONFIG_HAS_FPU),)
     PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@mipsel-linux-musl@mips32+soft_float@fast+lto
-    PKG_HASH:=f0ca46e7ca83711ae24a6c0d7c71400d994dc7289cae599412fd8e654b198f3e
+    PKG_HASH:=760544a88724e3b1b9eac79c9400231e81aa8786f8f00a979229e175811ffe6d
   else
     PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@mipsel-linux-musl@mips32@fast+lto
-    PKG_HASH:=48eecd536e1f4cb7d3fa44cdc23d996acfbc75004d8e16b405a7ee148523696e
+    PKG_HASH:=ec547c31a884e0967437ceb90a5c270864efe81b0e40939e0ec2810c7bfd6653
   endif
+else ifeq ($(ARCH),riscv64)
+  PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@riscv64-linux-musl@baseline_rv64@fast+lto
+  PKG_HASH:=7056f47f4d6b20109e007792694dc83e5eac44c9265d7be20f6dc10375b35a9b
 else ifeq ($(ARCH),x86_64)
   PKG_SOURCE_URL_FILE:=$(PKG_NAME)+wolfssl@x86_64-linux-musl@x86_64@fast+lto
-  PKG_HASH:=6928e28f1c6c41099b6ce8ab1ce38a98cc9da75ff9533f8644f67be455463d0e
+  PKG_HASH:=842ea4e9816efd91d39bc76ead5c4a42e79011757e37c521b4270b675cfcb30c
 else
   PKG_SOURCE_URL_FILE:=dummy
   PKG_HASH:=dummy
@@ -68,7 +71,7 @@ define Package/chinadns-ng
   SUBMENU:=IP Addresses and Names
   TITLE:=ChinaDNS next generation, refactoring with epoll and ipset.
   URL:=https://github.com/zfl9/chinadns-ng
-  DEPENDS:=@(aarch64||arm||i386||mips||mipsel||x86_64)
+  DEPENDS:=@(aarch64||arm||i386||mips||mipsel||riscv64||x86_64)
 endef
 
 define Build/Compile

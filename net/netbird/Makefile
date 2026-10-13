@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=netbird
-PKG_VERSION:=0.34.1
+PKG_VERSION:=0.78.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/netbirdio/netbird/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=5eb78e815c73b197f36141dbc071520171cd660a1f64a010c5ec5c4db4d006e4
+PKG_HASH:=2adde8bbd77ea595b5f50174be10574466f1c07fc9fbf827024245aec2f4dabc
 
 PKG_MAINTAINER:=Wesley Gimenes <wehagy@proton.me>
 PKG_LICENSE:=BSD-3-Clause
@@ -41,14 +41,8 @@ define Package/netbird/description
 endef
 
 define Package/netbird/conffiles
-/etc/netbird/config.json
+/root/.config/netbird/
 endef
-
-# Workaround for musl 1.2.4 compability in mattn/go-sqlite3
-# https://github.com/mattn/go-sqlite3/issues/1164
-ifneq ($(CONFIG_USE_MUSL),)
-	TARGET_CFLAGS += -D_LARGEFILE64_SOURCE
-endif
 
 define Package/netbird/install
 	$(call GoPackage/Package/Install/Bin,$(PKG_INSTALL_DIR))

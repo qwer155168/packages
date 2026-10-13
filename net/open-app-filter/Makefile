@@ -6,9 +6,9 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_URL:=https://github.com/destan19/OpenAppFilter.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2024-04-03
-PKG_SOURCE_VERSION:=75b7f493cfd8ec07d8ed4a1fb4db54b9bd710a84
-PKG_MIRROR_HASH:=a45f2f9befbcedbb40684c6e68f0c04d83e8b14a1ef1575e964bce3409e23d3d
+PKG_SOURCE_DATE:=2026-04-20
+PKG_SOURCE_VERSION:=569f93bfd56afc3ae8c21f13fc973926ff6629a5
+PKG_MIRROR_HASH:=bdf5bcc8fc5ffbf64a318dc87d05fbacb545590224938f839b50c8f4193c1f52
 
 PKG_BUILD_PARALLEL:=1
 
@@ -45,12 +45,14 @@ endef
 
 define Package/appfilter/conffiles
 /etc/config/appfilter
+/etc/config/user_info
 endef
 
 define Package/appfilter/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/open-app-filter/src/oafd $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/open-app-filter/files/gen_class.sh $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/open-app-filter/files/hnat.sh $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/open-app-filter/files/oaf_rule $(1)/usr/bin/
 
 	$(INSTALL_DIR) $(1)/etc/appfilter
@@ -59,6 +61,7 @@ define Package/appfilter/install
 
 	$(INSTALL_DIR) $(1)/etc/config $(1)/etc/init.d
 	$(INSTALL_CONF) $(PKG_BUILD_DIR)/open-app-filter/files/appfilter.config $(1)/etc/config/appfilter
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/open-app-filter/files/user_info.config $(1)/etc/config/user_info
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/open-app-filter/files/appfilter.init $(1)/etc/init.d/appfilter
 endef
 
